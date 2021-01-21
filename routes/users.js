@@ -6,16 +6,25 @@ const db = require('../db');
 
 router.get('/', async (req, res) => {
     console.log('this printed');
-    // console.log(db)
     try {
         const results = await db.query(`SELECT * FROM users`);
-        console.log('this also printed');
+        console.log('this also printed'); // this never prints
         await db.end()
         return res.json(results.rows)
     } catch (err) {
-        console.log(`didn't work`)
+        console.log(`didn't work`) // neither does this
     }
     
+})
+
+router.get('/search', async (req, res, next) => {
+    try {
+        const { type } = req.query;
+        const results = await db.query(`SELECT * FROM users WHERE type='${type}'`)
+        return res.json(results.rows)
+    } catch(e) {
+        return next(e)
+    }
 })
 
 
