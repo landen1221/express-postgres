@@ -4,8 +4,9 @@ const express = require("express");
 const router = express.Router();
 const db = require('../db');
 
+
 router.get('/', async (req, res) => {
-    console.log('this printed');
+    console.log('this printed'); // this prints
     try {
         const results = await db.query(`SELECT * FROM users`);
         console.log('this also printed'); // this never prints
